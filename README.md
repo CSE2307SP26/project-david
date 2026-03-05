@@ -2,10 +2,10 @@
 
 ## Team Members:
 
-* 
-* 
-* 
-* 
+* Nachuan Ding
+* Haoxuan Yuan
+* Xinyu Pan
+* Shiyuan Zhang
 
 ## User stories
 
