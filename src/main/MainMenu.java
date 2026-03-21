@@ -48,6 +48,15 @@ public class MainMenu {
         userAccount.deposit(depositAmount);
     }
 
+    public void performWithDraw(){
+        double withDrawAmount = -1;
+        while(withDrawAmount < 0 || withDrawAmount > userAccount.getBalance()) {
+            System.out.print("How much would you like to withdraw: ");
+            withDrawAmount = keyboardInput.nextInt();
+        }
+        userAccount.withdraw(withDrawAmount);
+    }
+
     public void run() {
         int selection = -1;
         while(selection != EXIT_SELECTION) {
