@@ -20,6 +20,7 @@ public class MainMenu {
         
         System.out.println("1. Make a deposit");
         System.out.println("2. Exit the app");
+        System.out.println("3. MMake a withdraw");
 
     }
 
@@ -36,6 +37,10 @@ public class MainMenu {
         switch (selection) {
             case 1:
                 performDeposit();
+                break;
+            case 3:
+                performWithDraw();
+                break;
         }
     }
 
@@ -46,6 +51,15 @@ public class MainMenu {
             depositAmount = keyboardInput.nextInt();
         }
         userAccount.deposit(depositAmount);
+    }
+
+    public void performWithDraw(){
+        double withDrawAmount = -1;
+        while(withDrawAmount < 0 || withDrawAmount > userAccount.getBalance()) {
+            System.out.print("How much would you like to withdraw: ");
+            withDrawAmount = keyboardInput.nextInt();
+        }
+        userAccount.withdraw(withDrawAmount);
     }
 
     public void run() {
