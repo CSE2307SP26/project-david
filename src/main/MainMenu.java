@@ -20,6 +20,7 @@ public class MainMenu {
         
         System.out.println("1. Make a deposit");
         System.out.println("2. Exit the app");
+        System.out.println("3. MMake a withdraw");
 
     }
 
@@ -36,6 +37,10 @@ public class MainMenu {
         switch (selection) {
             case 1:
                 performDeposit();
+                break;
+            case 3:
+                performWithDraw();
+                break;
         }
     }
 
