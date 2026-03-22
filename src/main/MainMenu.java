@@ -38,8 +38,10 @@ public class MainMenu {
         switch (selection) {
             case 1:
                 performDeposit();
+                break;
             case 4:
                 createAdditionalAccount();
+                break;
         }
     }
 
