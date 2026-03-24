@@ -53,7 +53,7 @@ public class MainMenu {
         userAccounts.add(new BankAccount());
     }
 
-    public BankAccount chooseAccount() {
+    public BankAccount userAccount() {
         int selection = -1;
         while(selection < 1 || selection > userAccounts.size()){
             System.out.println("Please select account: ");
@@ -71,7 +71,7 @@ public class MainMenu {
             System.out.print("How much would you like to deposit: ");
             depositAmount = keyboardInput.nextInt();
         }
-        chooseAccount().deposit(depositAmount);
+        userAccount().deposit(depositAmount);
     }
 
     public void run() {
