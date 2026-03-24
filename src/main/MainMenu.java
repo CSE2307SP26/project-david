@@ -1,17 +1,19 @@
 package main;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class MainMenu {
 
-    private static final int EXIT_SELECTION = 2;
-	private static final int MAX_SELECTION = 2;
+    private static final int EXIT_SELECTION = 3;
+	private static final int MAX_SELECTION = 3;
 
-	private BankAccount userAccount;
+	private ArrayList<BankAccount> userAccounts;
     private Scanner keyboardInput;
 
     public MainMenu() {
-        this.userAccount = new BankAccount();
+        this.userAccounts = new ArrayList<>();
+        this.userAccounts.add(new BankAccount());
         this.keyboardInput = new Scanner(System.in);
     }
 
@@ -20,8 +22,8 @@ public class MainMenu {
         
         System.out.println("1. Make a deposit");
         System.out.println("2. Exit the app");
-        System.out.println("3. MMake a withdraw");
-
+        System.out.println("3. Make a withdraw");
+        System.out.println("4. Create a new account");
     }
 
     public int getUserSelection(int max) {
@@ -41,7 +43,30 @@ public class MainMenu {
             case 3:
                 performWithDraw();
                 break;
+            case 4:
+                createAdditionalAccount();
+                break;
         }
+    }
+
+    public int getNumberOfAccounts(){
+        return userAccounts.size();
+    }
+    
+    public void createAdditionalAccount() {
+        userAccounts.add(new BankAccount());
+    }
+
+    public BankAccount userAccount() {
+        int selection = -1;
+        while(selection < 1 || selection > userAccounts.size()){
+            System.out.println("Please select account: ");
+            for(int i = 0; i < userAccounts.size(); i++){
+                System.out.println((i + 1) + ". Account" + (i + 1));
+            }
+            selection = keyboardInput.nextInt();
+        }
+        return userAccounts.get(selection - 1);
     }
 
     public void performDeposit() {
@@ -50,7 +75,7 @@ public class MainMenu {
             System.out.print("How much would you like to deposit: ");
             depositAmount = keyboardInput.nextInt();
         }
-        userAccount.deposit(depositAmount);
+        userAccount().deposit(depositAmount);
     }
 
     public void performWithDraw(){
