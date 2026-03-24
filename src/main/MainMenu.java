@@ -80,11 +80,11 @@ public class MainMenu {
 
     public void performWithDraw(){
         double withDrawAmount = -1;
-        while(withDrawAmount < 0 || withDrawAmount > userAccount.getBalance()) {
+        while(withDrawAmount < 0 || withDrawAmount > userAccount().getBalance()) {
             System.out.print("How much would you like to withdraw: ");
             withDrawAmount = keyboardInput.nextInt();
         }
-        userAccount.withdraw(withDrawAmount);
+        userAccount().withdraw(withDrawAmount);
     }
 
     public void run() {
