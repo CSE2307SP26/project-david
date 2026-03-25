@@ -15,8 +15,8 @@
 4. A bank customer should be able to view their transaction history for an account. (Haoxuan)
 5. A bank customer should be able to create an additional account with the bank. (Shiyuan)
 6. A bank customer should be able to close an existing account. (Xinyu)
-7. A bank customer should be able to transfer money from one account to another. 
-8. A bank adminstrator should be able to collect fees from existing accounts when necessary.
+7. A bank customer should be able to transfer money from one account to another. (Nachuan)
+8. A bank adminstrator should be able to collect fees from existing accounts when necessary. (Nachuan)
 9. A bank adminstrator should be able to add an interest payment to an existing account when necessary. (Xinyu)
 
 ## What user stories do you intend to complete next iteration?
