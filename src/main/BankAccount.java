@@ -29,6 +29,10 @@ public class BankAccount {
         targetAccount.deposit(amount);
     }
 
+    public void collectFee(double amount) {
+        this.withdraw(amount);
+    }
+    
     public double getBalance() {
         return this.balance;
     }
