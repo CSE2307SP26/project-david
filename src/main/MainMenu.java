@@ -25,6 +25,7 @@ public class MainMenu {
         System.out.println("3. Exit the app");
         System.out.println("4. Make a withdraw");
         System.out.println("5. Create a new account");
+        System.out.println("6. View transaction history");
     }
 
     public int getUserSelection(int max) {
@@ -50,8 +51,15 @@ public class MainMenu {
             case 4:
                 createAdditionalAccount();
                 break;
+            case 5:
+                viewTransactionHistory();
+                break;
         }
     }
+
+
+
+
 
     public void checkBalance() {
         BankAccount account = userAccount();
@@ -95,6 +103,15 @@ public class MainMenu {
         }
         userAccount().withdraw(withDrawAmount);
     }
+
+    public void viewTransactionHistory() {
+        BankAccount account = userAccount();
+        System.out.println("Transaction history: ");
+        for(Transaction transaction : account.getTransactionHistory()) {
+            System.out.println(transaction);
+        }
+    }
+
 
     public void run() {
         int selection = -1;

@@ -1,5 +1,5 @@
 package test;
-
+import main.Transaction;
 import main.BankAccount;
 
 import static org.junit.Assert.assertEquals;
@@ -34,6 +34,18 @@ public class BankAccountTest {
         testAccount.withdraw(20);
         assertEquals(30, testAccount.getBalance(), 0.01);
     }
+
+
+    @Test
+    public void testTransactionHistory() {
+        BankAccount testAccount = new BankAccount();
+        testAccount.deposit(100);
+        testAccount.withdraw(30);
+        assertEquals(2, testAccount.getTransactionHistory().size());
+        assertEquals("deposit", testAccount.getTransactionHistory().get(0).getType());
+        assertEquals("withdraw", testAccount.getTransactionHistory().get(1).getType());
+    }
+
 
     @Test
     public void testEmptyWithDraw() {
