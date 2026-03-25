@@ -30,6 +30,11 @@ public class BankAccount {
             throw new IllegalArgumentException();
         }
     }
+    
+    public void transferMoney(BankAccount targetAccount, double amount) {
+        this.withdraw(amount);
+        targetAccount.deposit(amount);
+    }
 
     public double getBalance() {
         return this.balance;
