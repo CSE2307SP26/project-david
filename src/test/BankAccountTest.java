@@ -96,4 +96,24 @@ public class BankAccountTest {
             //do nothing, test passes
         }
     }
-} 
+
+    @Test
+    public void testCollectFee() {
+        BankAccount testAccount = new BankAccount();
+        testAccount.deposit(100);
+        testAccount.collectFee(20);
+        assertEquals(80, testAccount.getBalance(), 0.01);
+    }
+
+    @Test
+    public void testOverCollectFee() {
+        BankAccount testAccount = new BankAccount();
+        testAccount.deposit(50);
+        try {
+            testAccount.collectFee(100);
+            fail();
+        } catch (IllegalArgumentException e) {
+            //do nothing, test passes
+        }
+    }
+}
