@@ -27,4 +27,4 @@ All the functions we have implemented are currently running as expected, and all
 
 
 ## What commands are needed to compile and run your code from the command line?
-We can click the run button in the Mainmenu.java file in the IDE to start the application.
+We can click the run button in the Mainmenu.java file to start the application.
