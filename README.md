@@ -27,18 +27,4 @@ All the functions we have implemented are currently running as expected, and all
 
 
 ## What commands are needed to compile and run your code from the command line?
-To compile and run the project from the command line, the following steps are required:
-
-First, compile all source and test files:
-
-javac -cp "test-lib/*" -d bin src/main/*.java src/test/*.java
-
-Then, run the unit tests using JUnit:
-
-java -cp "bin;test-lib/*" org.junit.platform.console.ConsoleLauncher --scan-class-path
-
-To run the application interactively:
-
-java -cp "bin" main.MainMenu
-
-OR we can click the run button in the Mainmenu.java file in the IDE to start the application.
+We can click the run button in the Mainmenu.java file in the IDE to start the application.
