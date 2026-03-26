@@ -1,3 +1,4 @@
+
 package main;
 
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ public class BankAccount {
     }
 
     public void deposit(double amount) {
+// Close account feature implemented
         if (closed) {
             throw new IllegalStateException();
         }
