@@ -17,7 +17,7 @@ public class BankAccount {
     }
 
     public void deposit(double amount) {
-// Close account feature implemented
+// Close account feature implemented.
         if (closed) {
             throw new IllegalStateException();
         }
