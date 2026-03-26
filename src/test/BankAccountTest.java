@@ -3,6 +3,7 @@ import main.Transaction;
 import main.BankAccount;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import org.junit.jupiter.api.Test;
@@ -114,6 +115,44 @@ public class BankAccountTest {
             fail();
         } catch (IllegalArgumentException e) {
             //do nothing, test passes
+        }
+    }
+    @Test
+    public void testAddInterest() {
+        BankAccount testAccount = new BankAccount();
+        testAccount.deposit(100);
+        testAccount.addInterest(0.05);
+        assertEquals(105, testAccount.getBalance(), 0.01);
+    }
+
+    @Test
+    public void testInvalidInterestRate() {
+        BankAccount testAccount = new BankAccount();
+        try {
+            testAccount.addInterest(-0.10);
+            fail();
+        } catch (IllegalArgumentException e) {
+            // do nothing, test passes
+        }
+    }
+
+    @Test
+    public void testCloseAccount() {
+        BankAccount testAccount = new BankAccount();
+        testAccount.closeAccount();
+        assertTrue(testAccount.isClosed());
+    }
+
+    @Test
+    public void testDepositIntoClosedAccount() {
+        BankAccount testAccount = new BankAccount();
+        testAccount.closeAccount();
+
+        try {
+            testAccount.deposit(20);
+            fail();
+        } catch (IllegalStateException e) {
+            // do nothing, test passes
         }
     }
 }

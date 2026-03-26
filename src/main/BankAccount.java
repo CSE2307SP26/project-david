@@ -6,14 +6,19 @@ import java.util.List;
 public class BankAccount {
 
     private double balance;
+    private boolean closed;
     private List<Transaction> transactionHistory;
 
     public BankAccount() {
         this.balance = 0;
+        this.closed = false;
         this.transactionHistory = new ArrayList<>();
     }
 
     public void deposit(double amount) {
+        if (closed) {
+            throw new IllegalStateException();
+        }
         if(amount > 0) {
             this.balance += amount;
             transactionHistory.add(new Transaction("deposit", amount));
@@ -23,12 +28,27 @@ public class BankAccount {
     }
 
     public void withdraw(double amount){
+        if (closed) {
+            throw new IllegalStateException();
+        }
         if(amount > 0 && amount <= this.balance){
             this.balance -= amount;
             transactionHistory.add(new Transaction("withdraw", amount));
         } else {
             throw new IllegalArgumentException();
         }
+    }
+
+    public void addInterest(double rate) {
+        if (closed) {
+            throw new IllegalStateException();
+        }
+        if (rate < 0) {
+            throw new IllegalArgumentException("Interest rate cannot be negative.");
+        }
+
+        double interestPayment = this.balance * rate;
+        this.balance += interestPayment;
     }
     
     public void transferMoney(BankAccount targetAccount, double amount) {
@@ -37,9 +57,19 @@ public class BankAccount {
     }
 
     public void collectFee(double amount) {
+        if (closed) {
+            throw new IllegalStateException();
+        }
         this.withdraw(amount);
     }
-    
+    public void closeAccount() {
+        this.closed = true;
+    }
+
+    public boolean isClosed() {
+        return this.closed;
+    }
+
     public double getBalance() {
         return this.balance;
     }
