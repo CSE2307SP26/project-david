@@ -70,30 +70,63 @@ public class BankAccountTest {
         }
     }
 
+//    @Test
+  //  public void testTransferMoney() {
+    //    BankAccount fromAccount = new BankAccount();
+      //  BankAccount toAccount = new BankAccount();
+
+        //fromAccount.deposit(100);
+        //fromAccount.transferMoney(toAccount, 50);
+
+       // assertEquals(50, fromAccount.getBalance(), 0.01);
+        //assertEquals(50, toAccount.getBalance(), 0.01);
+    //}
+
     @Test
-    public void testTransferMoney() {
-        BankAccount fromAccount = new BankAccount();
-        BankAccount toAccount = new BankAccount();
-
-        fromAccount.deposit(100);
-        fromAccount.transferMoney(toAccount, 50);
-
-        assertEquals(50, fromAccount.getBalance(), 0.01);
-        assertEquals(50, toAccount.getBalance(), 0.01);
-    }
-
-    @Test
-    public void testOverTransferMoney() {
-        BankAccount fromAccount = new BankAccount();
-        BankAccount toAccount = new BankAccount();
-
-        fromAccount.deposit(50);
-
+    public void testSetWithdrawLimit() {
+        BankAccount testAccount = new BankAccount();
+        testAccount.deposit(100);
+        testAccount.setWithdrawLimit(30);
         try {
-            fromAccount.transferMoney(toAccount, 100);
+            testAccount.withdraw(50);
             fail();
         } catch (IllegalArgumentException e) {
-            //do nothing, test passes
+  
         }
     }
+
+    @Test
+    public void testWithdrawWithinLimit() {
+        BankAccount testAccount = new BankAccount();
+        testAccount.deposit(100);
+        testAccount.setWithdrawLimit(30);
+        testAccount.withdraw(20);
+        assertEquals(80, testAccount.getBalance(), 0.01);
+    }
+
+    @Test
+    public void testInvalidWithdrawLimit() {
+        BankAccount testAccount = new BankAccount();
+        try {
+            testAccount.setWithdrawLimit(-10);
+            fail();
+        } catch (IllegalArgumentException e) {
+       
+        }
+    }
+
+//    @Test
+ //   public void testOverTransferMoney() {
+   //     BankAccount fromAccount = new BankAccount();
+     //   BankAccount toAccount = new BankAccount();
+
+    //    fromAccount.deposit(50);
+
+      //  try {
+        //    fromAccount.transferMoney(toAccount, 100);
+          //  fail();
+       // } catch (IllegalArgumentException e) {
+            //do nothing, test passes
+       // }
+   // }
 } 

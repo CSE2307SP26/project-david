@@ -26,6 +26,7 @@ public class MainMenu {
         System.out.println("4. Make a withdraw");
         System.out.println("5. Create a new account");
         System.out.println("6. View transaction history");
+        System.out.println("7. Set withdraw limit");
     }
 
     public int getUserSelection(int max) {
@@ -53,6 +54,9 @@ public class MainMenu {
                 break;
             case 5:
                 viewTransactionHistory();
+                break;
+            case 6:
+                setWithdrawLimit();
                 break;
         }
     }
@@ -103,6 +107,15 @@ public class MainMenu {
         }
         userAccount().withdraw(withDrawAmount);
     }
+
+    public void setWithdrawLimit() {
+        BankAccount account = userAccount();
+        System.out.print("Enter withdraw limit: ");
+        double limit = keyboardInput.nextDouble();
+        account.setWithdrawLimit(limit);
+        System.out.println("Withdraw limit set to: " + limit);
+    }
+
 
     public void viewTransactionHistory() {
         BankAccount account = userAccount();
