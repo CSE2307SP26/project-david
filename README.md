@@ -19,9 +19,10 @@
 7. A bank customer should be able to transfer money from one account to another. (Nachuan)
 8. A bank administrator should be able to collect fees from existing accounts when necessary. (Nachuan)
 9. A bank administrator should be able to add an interest payment to an existing account when necessary. (Xinyu)
-
+10. A bank customer should be able to set a withdraw limit for an account. (Haoxuan)
+11. A bank customer should be able to rename their account. (Haoxuan)
 ## What user stories were completed this iteration?
-
+#1
 - Deposit into an existing account
 - Withdraw from an account
 - Check account balance
@@ -31,6 +32,11 @@
 - Transfer money from one account to another
 - Collect fees from existing accounts when necessary
 - Add an interest payment to an existing account when necessary
+
+#2
+- Set a withdraw limit for an account
+- Rename an account
+
 
 ## What user stories do you intend to complete next iteration?
 
