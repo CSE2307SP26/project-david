@@ -24,7 +24,7 @@ public class BankAccountTest {
             testAccount.deposit(-50);
             fail();
         } catch (IllegalArgumentException e) {
-            /
+            
         }
     }
 
@@ -144,6 +144,24 @@ public class BankAccountTest {
         testAccount.closeAccount();
         assertTrue(testAccount.isClosed());
     }
+    @Test
+    public void testRenameAccount() {
+        BankAccount testAccount = new BankAccount();
+        testAccount.setAccountName("Savings");
+        assertEquals("Savings", testAccount.getAccountName());
+    }
+
+
+    @Test
+    public void testInvalidAccountName() {
+        BankAccount testAccount = new BankAccount();
+        try {
+            testAccount.setAccountName("");
+            fail();
+        } catch (IllegalArgumentException e) {
+        }
+    }
+
 
     @Test
     public void testDepositIntoClosedAccount() {

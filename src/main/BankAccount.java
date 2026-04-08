@@ -9,12 +9,14 @@ public class BankAccount {
     private boolean closed;
     private List<Transaction> transactionHistory;
     private double withdrawLimit;
+    private String accountName;
 
     public BankAccount() {
         this.balance = 0;
         this.closed = false;
         this.transactionHistory = new ArrayList<>();
         this.withdrawLimit = Double.MAX_VALUE;
+        this.accountName = "Account";
     }
 
     public void deposit(double amount) {
@@ -82,6 +84,17 @@ public class BankAccount {
 
     public boolean isClosed() {
         return this.closed;
+    }
+
+    public void setAccountName(String name) {
+        if(name == null || name.isEmpty()) {
+            throw new IllegalArgumentException();
+        }
+        this.accountName = name;
+    }
+
+    public String getAccountName() {
+        return this.accountName;
     }
 
     public double getBalance() {

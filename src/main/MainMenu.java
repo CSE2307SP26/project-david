@@ -5,8 +5,8 @@ import java.util.Scanner;
 
 public class MainMenu {
 
-    private static final int EXIT_SELECTION = 9;
-    private static final int MAX_SELECTION = 9;
+    private static final int EXIT_SELECTION = 10;
+    private static final int MAX_SELECTION = 10;
 
     private ArrayList<BankAccount> userAccounts;
     private Scanner keyboardInput;
@@ -27,7 +27,8 @@ public class MainMenu {
         System.out.println("6. Add interest payment");
         System.out.println("7. Close existing account");
         System.out.println("8. Set withdraw limit");
-        System.out.println("9. Exit the app");
+        System.out.println("9. Rename account");
+        System.out.println("10. Exit the app");
     }
 
     public int getUserSelection(int max) {
@@ -65,6 +66,9 @@ public class MainMenu {
             case 8:
                 setWithdrawLimit();
                 break;
+            case 9:
+                renameAccount();    
+                break;
         }
     }
 
@@ -86,7 +90,7 @@ public class MainMenu {
         while(selection < 1 || selection > userAccounts.size()){
             System.out.println("Please select account: ");
             for(int i = 0; i < userAccounts.size(); i++){
-                System.out.println((i + 1) + ". Account" + (i + 1));
+                System.out.println((i + 1) + ". " + userAccounts.get(i).getAccountName());
             }
             selection = keyboardInput.nextInt();
         }
@@ -141,6 +145,15 @@ public class MainMenu {
         BankAccount selectedAccount = userAccount();
         selectedAccount.closeAccount();
     }
+
+    public void renameAccount() {
+        BankAccount account = userAccount();
+        System.out.print("Enter new account name: ");
+        String name = keyboardInput.next();
+        account.setAccountName(name);
+        System.out.println("Account renamed to: " + name);
+    }
+
 
     public void run() {
         int selection = -1;
