@@ -1,4 +1,12 @@
+<<<<<<< HEAD
 # project26
+=======
+<<<<<<< HEAD
+# project26
+=======
+
+
+>>>>>>> withdraw_limit
 
 ## Team Members:
 
@@ -48,4 +56,10 @@ Run tests:
 `java -cp "bin;test-lib/*" org.junit.platform.console.ConsoleLauncher --scan-classpath`
 
 Run the application:
+<<<<<<< HEAD
 `bash runApp.sh`
+=======
+`bash runApp.sh`
+
+>>>>>>> main
+>>>>>>> withdraw_limit

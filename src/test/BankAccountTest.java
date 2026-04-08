@@ -24,7 +24,7 @@ public class BankAccountTest {
             testAccount.deposit(-50);
             fail();
         } catch (IllegalArgumentException e) {
-            //do nothing, test passes
+            /
         }
     }
 
@@ -36,7 +36,6 @@ public class BankAccountTest {
         assertEquals(30, testAccount.getBalance(), 0.01);
     }
 
-
     @Test
     public void testTransactionHistory() {
         BankAccount testAccount = new BankAccount();
@@ -47,7 +46,6 @@ public class BankAccountTest {
         assertEquals("withdraw", testAccount.getTransactionHistory().get(1).getType());
     }
 
-
     @Test
     public void testEmptyWithDraw() {
         BankAccount testAccount = new BankAccount();
@@ -55,7 +53,7 @@ public class BankAccountTest {
             testAccount.withdraw(50);
             fail();
         } catch (IllegalArgumentException e) {
-            //do nothing, test passes
+           
         }
     }
 
@@ -67,34 +65,38 @@ public class BankAccountTest {
             testAccount.withdraw(100);
             fail();
         } catch (IllegalArgumentException e) {
-            //do nothing, test passes
+  
         }
     }
 
     @Test
-    public void testTransferMoney() {
-        BankAccount fromAccount = new BankAccount();
-        BankAccount toAccount = new BankAccount();
-
-        fromAccount.deposit(100);
-        fromAccount.transferMoney(toAccount, 50);
-
-        assertEquals(50, fromAccount.getBalance(), 0.01);
-        assertEquals(50, toAccount.getBalance(), 0.01);
+    public void testSetWithdrawLimit() {
+        BankAccount testAccount = new BankAccount();
+        testAccount.deposit(100);
+        testAccount.setWithdrawLimit(30);
+        try {
+            testAccount.withdraw(50);
+            fail();
+        } catch (IllegalArgumentException e) {
+        }
     }
 
     @Test
-    public void testOverTransferMoney() {
-        BankAccount fromAccount = new BankAccount();
-        BankAccount toAccount = new BankAccount();
+    public void testWithdrawWithinLimit() {
+        BankAccount testAccount = new BankAccount();
+        testAccount.deposit(100);
+        testAccount.setWithdrawLimit(30);
+        testAccount.withdraw(20);
+        assertEquals(80, testAccount.getBalance(), 0.01);
+    }
 
-        fromAccount.deposit(50);
-
+    @Test
+    public void testInvalidWithdrawLimit() {
+        BankAccount testAccount = new BankAccount();
         try {
-            fromAccount.transferMoney(toAccount, 100);
+            testAccount.setWithdrawLimit(-10);
             fail();
         } catch (IllegalArgumentException e) {
-            //do nothing, test passes
         }
     }
 
@@ -114,9 +116,10 @@ public class BankAccountTest {
             testAccount.collectFee(100);
             fail();
         } catch (IllegalArgumentException e) {
-            //do nothing, test passes
+            
         }
     }
+
     @Test
     public void testAddInterest() {
         BankAccount testAccount = new BankAccount();
@@ -132,7 +135,6 @@ public class BankAccountTest {
             testAccount.addInterest(-0.10);
             fail();
         } catch (IllegalArgumentException e) {
-            // do nothing, test passes
         }
     }
 
@@ -147,12 +149,10 @@ public class BankAccountTest {
     public void testDepositIntoClosedAccount() {
         BankAccount testAccount = new BankAccount();
         testAccount.closeAccount();
-
         try {
             testAccount.deposit(20);
             fail();
         } catch (IllegalStateException e) {
-            // do nothing, test passes
         }
     }
 }

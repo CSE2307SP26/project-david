@@ -5,10 +5,10 @@ import java.util.Scanner;
 
 public class MainMenu {
 
-    private static final int EXIT_SELECTION = 8;
-	private static final int MAX_SELECTION = 8;
+    private static final int EXIT_SELECTION = 9;
+    private static final int MAX_SELECTION = 9;
 
-	private ArrayList<BankAccount> userAccounts;
+    private ArrayList<BankAccount> userAccounts;
     private Scanner keyboardInput;
 
     public MainMenu() {
@@ -19,7 +19,6 @@ public class MainMenu {
 
     public void displayOptions() {
         System.out.println("Welcome to the 237 Bank App!");
-
         System.out.println("1. Make a deposit");
         System.out.println("2. Check account balance");
         System.out.println("3. Make a withdraw");
@@ -27,7 +26,8 @@ public class MainMenu {
         System.out.println("5. View transaction history");
         System.out.println("6. Add interest payment");
         System.out.println("7. Close existing account");
-        System.out.println("8. Exit the app");
+        System.out.println("8. Set withdraw limit");
+        System.out.println("9. Exit the app");
     }
 
     public int getUserSelection(int max) {
@@ -62,6 +62,9 @@ public class MainMenu {
             case 7:
                 performCloseAccount();
                 break;
+            case 8:
+                setWithdrawLimit();
+                break;
         }
     }
 
@@ -73,7 +76,7 @@ public class MainMenu {
     public int getNumberOfAccounts(){
         return userAccounts.size();
     }
-    
+
     public void createAdditionalAccount() {
         userAccounts.add(new BankAccount());
     }
@@ -106,6 +109,14 @@ public class MainMenu {
             withDrawAmount = keyboardInput.nextInt();
         }
         userAccount().withdraw(withDrawAmount);
+    }
+
+    public void setWithdrawLimit() {
+        BankAccount account = userAccount();
+        System.out.print("Enter withdraw limit: ");
+        double limit = keyboardInput.nextDouble();
+        account.setWithdrawLimit(limit);
+        System.out.println("Withdraw limit set to: " + limit);
     }
 
     public void viewTransactionHistory() {
@@ -144,5 +155,4 @@ public class MainMenu {
         MainMenu bankApp = new MainMenu();
         bankApp.run();
     }
-
 }
