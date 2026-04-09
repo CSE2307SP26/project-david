@@ -23,6 +23,8 @@
 11. A bank customer should be able to rename their account. (Haoxuan)
 12. A bank administrator should be able to freeze an account. (Shiyuan)
 13. A bank customer should be able to loan money from the bank. (Shiyuan)
+14. A bank customer should be able to check the account summary
+15. A bank customer should be able to have a minimum balance.
 
 ## What user stories do you intend to complete next iteration?
 
