@@ -116,4 +116,23 @@ public class BankAccount {
     public List<Transaction> getTransactionHistory() {
         return transactionHistory;
     }
+
+    public String getAccountSummary() {
+    double totalDeposits = 0;
+    double totalWithdrawals = 0;
+
+    for (Transaction transaction : transactionHistory) {
+        if (transaction.getType().equals("deposit")) {
+            totalDeposits += transaction.getAmount();
+        } else if (transaction.getType().equals("withdraw")) {
+            totalWithdrawals += transaction.getAmount();
+        }
+    }
+
+    return "Current balance: $" + this.balance
+            + "\nTotal deposits: $" + totalDeposits
+            + "\nTotal withdrawals: $" + totalWithdrawals
+            + "\nMinimum balance: $" + this.minimumBalance;
+    }
+    
 }
