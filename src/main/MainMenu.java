@@ -5,8 +5,8 @@ import java.util.Scanner;
 
 public class MainMenu {
 
-    private static final int EXIT_SELECTION = 13;
-    private static final int MAX_SELECTION = 13;
+    private static final int EXIT_SELECTION = 14;
+    private static final int MAX_SELECTION = 14;
 
     private ArrayList<BankAccount> userAccounts;
     private Scanner keyboardInput;
@@ -29,14 +29,15 @@ public class MainMenu {
         System.out.println("8. Set withdraw limit");
         System.out.println("9. Rename account");
         System.out.println("10. View account summary");
-        System.out.println("11. Frozen account");
+        System.out.println("11. Freeze account");
         System.out.println("12. Apply for a loan");
-        System.out.println("13. Exit the app");
+        System.out.println("13. Check remaining loan balance");
+        System.out.println("14. Exit the app");
     }
 
     public int getUserSelection(int max) {
         int selection = -1;
-        while(selection < 1 || selection > max) {
+        while (selection < 1 || selection > max) {
             System.out.print("Please make a selection: ");
             selection = keyboardInput.nextInt();
         }
@@ -70,13 +71,21 @@ public class MainMenu {
                 setWithdrawLimit();
                 break;
             case 9:
-                renameAccount();    
+                renameAccount();
+                break;
+            case 10:
+                viewAccountSummary();
                 break;
             case 11:
                 performFreezeAccount();
                 break;
-            case 13:
+            case 12:
                 performApplyLoan();
+                break;
+            case 13:
+                checkRemainingLoanBalance();
+                break;
+            case 14:
                 break;
         }
     }
@@ -86,7 +95,7 @@ public class MainMenu {
         System.out.println("Current balance: " + account.getBalance());
     }
 
-    public int getNumberOfAccounts(){
+    public int getNumberOfAccounts() {
         return userAccounts.size();
     }
 
@@ -96,9 +105,9 @@ public class MainMenu {
 
     public BankAccount userAccount() {
         int selection = -1;
-        while(selection < 1 || selection > userAccounts.size()){
+        while (selection < 1 || selection > userAccounts.size()) {
             System.out.println("Please select account: ");
-            for(int i = 0; i < userAccounts.size(); i++){
+            for (int i = 0; i < userAccounts.size(); i++) {
                 System.out.println((i + 1) + ". " + userAccounts.get(i).getAccountName());
             }
             selection = keyboardInput.nextInt();
@@ -108,16 +117,16 @@ public class MainMenu {
 
     public void performDeposit() {
         double depositAmount = -1;
-        while(depositAmount < 0) {
+        while (depositAmount < 0) {
             System.out.print("How much would you like to deposit: ");
             depositAmount = keyboardInput.nextInt();
         }
         userAccount().deposit(depositAmount);
     }
 
-    public void performWithDraw(){
+    public void performWithDraw() {
         double withDrawAmount = -1;
-        while(withDrawAmount < 0 || withDrawAmount > userAccount().getBalance()) {
+        while (withDrawAmount < 0 || withDrawAmount > userAccount().getBalance()) {
             System.out.print("How much would you like to withdraw: ");
             withDrawAmount = keyboardInput.nextInt();
         }
@@ -135,7 +144,7 @@ public class MainMenu {
     public void viewTransactionHistory() {
         BankAccount account = userAccount();
         System.out.println("Transaction history: ");
-        for(Transaction transaction : account.getTransactionHistory()) {
+        for (Transaction transaction : account.getTransactionHistory()) {
             System.out.println(transaction);
         }
     }
@@ -163,19 +172,14 @@ public class MainMenu {
         System.out.println("Account renamed to: " + name);
     }
 
+    public void viewAccountSummary() {
+        BankAccount selectedAccount = userAccount();
+        System.out.println(selectedAccount.getAccountSummary());
+    }
+
     public void performFreezeAccount() {
         BankAccount selectedAccount = userAccount();
         selectedAccount.freezeAccount();
-    }
-
-
-    public void run() {
-        int selection = -1;
-        while(selection != EXIT_SELECTION) {
-            displayOptions();
-            selection = getUserSelection(MAX_SELECTION);
-            processInput(selection);
-        }
     }
 
     public void performApplyLoan() {
@@ -188,12 +192,22 @@ public class MainMenu {
         selectedAccount.applyForLoan(loanAmount);
     }
 
+    public void checkRemainingLoanBalance() {
+        BankAccount selectedAccount = userAccount();
+        System.out.println("Remaining loan balance: " + selectedAccount.getLoanBalance());
+    }
+
+    public void run() {
+        int selection = -1;
+        while (selection != EXIT_SELECTION) {
+            displayOptions();
+            selection = getUserSelection(MAX_SELECTION);
+            processInput(selection);
+        }
+    }
+
     public static void main(String[] args) {
         MainMenu bankApp = new MainMenu();
         bankApp.run();
-    }
-    public void viewAccountSummary() {
-        BankAccount selectedAccount = userAccount();
-        System.out.println(selectedAccount.getAccountSummary());
     }
 }
