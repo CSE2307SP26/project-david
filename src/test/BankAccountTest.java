@@ -240,4 +240,42 @@ public class BankAccountTest {
         } catch (IllegalStateException e) {
         }
     }
+
+    @Test
+    public void testApplyForLoan() {
+        BankAccount testAccount = new BankAccount();
+        testAccount.applyForLoan(500);
+        assertEquals(500, testAccount.getLoanBalance(), 0.01);
+        assertEquals(500, testAccount.getBalance(), 0.01);
+    }
+
+    @Test
+    public void testInvalidLoanAmount() {
+        BankAccount testAccount = new BankAccount();
+        try {
+            testAccount.applyForLoan(-100);
+            fail();
+        } catch (IllegalArgumentException e) {
+        }
+    }
+
+    @Test
+    public void testLoanTransactionHistory() {
+        BankAccount testAccount = new BankAccount();
+        testAccount.applyForLoan(300);
+        assertEquals(1, testAccount.getTransactionHistory().size());
+        assertEquals("loan", testAccount.getTransactionHistory().get(0).getType());
+        assertEquals(300, testAccount.getTransactionHistory().get(0).getAmount(), 0.01);
+    }
+
+    @Test
+    public void testApplyForLoanToClosedAccount() {
+        BankAccount testAccount = new BankAccount();
+        testAccount.closeAccount();
+        try {
+            testAccount.applyForLoan(200);
+            fail();
+        } catch (IllegalStateException e) {
+        }
+    }
 }

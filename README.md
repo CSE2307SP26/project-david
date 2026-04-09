@@ -21,22 +21,8 @@
 9. A bank administrator should be able to add an interest payment to an existing account when necessary. (Xinyu)
 10. A bank customer should be able to set a withdraw limit for an account. (Haoxuan)
 11. A bank customer should be able to rename their account. (Haoxuan)
-## What user stories were completed this iteration?
-#1
-- Deposit into an existing account
-- Withdraw from an account
-- Check account balance
-- View transaction history for an account
-- Create an additional account with the bank
-- Close an existing account
-- Transfer money from one account to another
-- Collect fees from existing accounts when necessary
-- Add an interest payment to an existing account when necessary
-
-#2
-- Set a withdraw limit for an account
-- Rename an account
-
+12. A bank customer should be able to fronzen an account. (Shiyuan)
+13. A bank customer should be able to loan money from the bank. (Shiyuan)
 
 ## What user stories do you intend to complete next iteration?
 
