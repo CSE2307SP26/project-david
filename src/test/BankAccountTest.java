@@ -278,4 +278,11 @@ public class BankAccountTest {
         } catch (IllegalStateException e) {
         }
     }
+
+    @Test
+    public void testCheckRemainingLoanBalance() {
+        BankAccount testAccount = new BankAccount();
+        testAccount.applyForLoan(250);
+        assertEquals(250, testAccount.getLoanBalance(), 0.01);
+    }
 }
