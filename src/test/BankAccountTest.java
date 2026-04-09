@@ -192,5 +192,19 @@ public class BankAccountTest {
         } catch (IllegalArgumentException e) {
          
         }
-}
+    }
+    @Test
+    public void testAccountSummary() {
+        BankAccount testAccount = new BankAccount();
+        testAccount.deposit(100);
+        testAccount.withdraw(20);
+        testAccount.setMinimumBalance(10);
+
+        String summary = testAccount.getAccountSummary();
+
+        assertTrue(summary.contains("Current balance: $80.0"));
+        assertTrue(summary.contains("Total deposits: $100.0"));
+        assertTrue(summary.contains("Total withdrawals: $20.0"));
+        assertTrue(summary.contains("Minimum balance: $10.0"));
+    }
 }
