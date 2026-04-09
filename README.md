@@ -21,12 +21,17 @@
 9. A bank administrator should be able to add an interest payment to an existing account when necessary. (Xinyu)
 10. A bank customer should be able to set a withdraw limit for an account. (Haoxuan)
 11. A bank customer should be able to rename their account. (Haoxuan)
-12. A bank customer should be able to fronzen an account. (Shiyuan)
+12. A bank administrator should be able to freeze an account. (Shiyuan)
 13. A bank customer should be able to loan money from the bank. (Shiyuan)
 
 ## What user stories do you intend to complete next iteration?
 
 In the upcoming iteration, We plan to further optimize the account management system. Specifically, We will expand the verification scope to prevent users from being restricted. Additionally, We will also consider improving the user interaction of the menu system, such as providing clearer prompts.
+
+In the next iteration, we will implement the following user stories:
+- A bank administrator should be able to unfreeze an account.
+- A bank customer should be able to pay off a loan.
+Also, we might take the administrator permissions into new java classes to make the code more modular and easier to maintain.
 
 ## Is there anything that you implemented but doesn't currently work?
 
