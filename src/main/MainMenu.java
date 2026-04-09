@@ -5,8 +5,8 @@ import java.util.Scanner;
 
 public class MainMenu {
 
-    private static final int EXIT_SELECTION = 11;
-    private static final int MAX_SELECTION = 11;
+    private static final int EXIT_SELECTION = 12;
+    private static final int MAX_SELECTION = 12;
 
     private ArrayList<BankAccount> userAccounts;
     private Scanner keyboardInput;
@@ -29,7 +29,8 @@ public class MainMenu {
         System.out.println("8. Set withdraw limit");
         System.out.println("9. Rename account");
         System.out.println("10. View account summary");
-        System.out.println("11. Exit the app");
+        System.out.println("11. Frozen account");
+        System.out.println("12. Exit the app");
     }
 
     public int getUserSelection(int max) {
@@ -69,6 +70,9 @@ public class MainMenu {
                 break;
             case 9:
                 renameAccount();    
+                break;
+            case 11:
+                performFreezeAccount();
                 break;
         }
     }
@@ -153,6 +157,11 @@ public class MainMenu {
         String name = keyboardInput.next();
         account.setAccountName(name);
         System.out.println("Account renamed to: " + name);
+    }
+
+    public void performFreezeAccount() {
+        BankAccount selectedAccount = userAccount();
+        selectedAccount.freezeAccount();
     }
 
 
