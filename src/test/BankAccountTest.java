@@ -193,6 +193,7 @@ public class BankAccountTest {
          
         }
     }
+    
     @Test
     public void testAccountSummary() {
         BankAccount testAccount = new BankAccount();
@@ -206,5 +207,37 @@ public class BankAccountTest {
         assertTrue(summary.contains("Total deposits: $100.0"));
         assertTrue(summary.contains("Total withdrawals: $20.0"));
         assertTrue(summary.contains("Minimum balance: $10.0"));
+    }
+
+    @Test
+    public void testFreezeAccount() {
+        BankAccount account = new BankAccount();
+        account.freezeAccount();
+        assertTrue(account.isFrozen());
+    }
+
+    @Test
+    public void testCannotDepositWhenFrozen() {
+        BankAccount account = new BankAccount();
+        account.freezeAccount();
+        try {
+            account.deposit(50);
+            fail();
+        } catch (IllegalStateException e) {
+        }
+    }
+
+
+    @Test
+    public void testCannotWithdrawWhenFrozen() {
+        BankAccount account = new BankAccount();
+        account.deposit(100);
+        account.freezeAccount();
+
+        try {
+            account.withdraw(20);
+            fail();
+        } catch (IllegalStateException e) {
+        }
     }
 }

@@ -11,6 +11,7 @@ public class BankAccount {
     private double withdrawLimit;
     private String accountName;
     private double minimumBalance;
+    private boolean frozen;
 
     public BankAccount() {
         this.balance = 0;
@@ -19,10 +20,11 @@ public class BankAccount {
         this.withdrawLimit = Double.MAX_VALUE;
         this.accountName = "Account";
         this.minimumBalance = 0;
+        this.frozen = false;
     }
 
     public void deposit(double amount) {
-        if (closed) {
+        if (closed || frozen) {
             throw new IllegalStateException();
         }
         if(amount > 0) {
@@ -34,7 +36,7 @@ public class BankAccount {
     }
 
     public void withdraw(double amount){
-        if (closed) {
+        if (closed || frozen) {
             throw new IllegalStateException();
         }
         if (amount > 0 && amount <= this.balance && this.balance - amount >= this.minimumBalance && amount <= this.withdrawLimit) {
@@ -56,7 +58,7 @@ public class BankAccount {
     }
 
     public void addInterest(double rate) {
-        if (closed) {
+        if (closed || frozen) {
             throw new IllegalStateException();
         }
         if (rate < 0) {
@@ -67,6 +69,9 @@ public class BankAccount {
     }
 
     public void transferMoney(BankAccount targetAccount, double amount) {
+        if (this.frozen || targetAccount.isFrozen()) {
+            throw new IllegalStateException();
+        }
         this.withdraw(amount);
         targetAccount.deposit(amount);
     }
@@ -84,7 +89,7 @@ public class BankAccount {
     }
 
     public void collectFee(double amount) {
-        if (closed) {
+        if (closed || frozen) {
             throw new IllegalStateException();
         }
         this.withdraw(amount);
@@ -133,6 +138,24 @@ public class BankAccount {
             + "\nTotal deposits: $" + totalDeposits
             + "\nTotal withdrawals: $" + totalWithdrawals
             + "\nMinimum balance: $" + this.minimumBalance;
+    }
+
+    public void freezeAccount() {
+        if (closed) {
+            throw new IllegalStateException();
+        }
+        this.frozen = true;
+    }
+
+    public void unfreezeAccount() {
+        if (closed) {
+            throw new IllegalStateException();
+        }
+        this.frozen = false;
+    }
+
+    public boolean isFrozen() {
+        return this.frozen;
     }
     
 }
