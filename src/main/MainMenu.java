@@ -5,8 +5,8 @@ import java.util.Scanner;
 
 public class MainMenu {
 
-    private static final int EXIT_SELECTION = 14;
-    private static final int MAX_SELECTION = 14;
+    private static final int EXIT_SELECTION = 15;
+    private static final int MAX_SELECTION = 15;
 
     private ArrayList<BankAccount> userAccounts;
     private Scanner keyboardInput;
@@ -32,7 +32,8 @@ public class MainMenu {
         System.out.println("11. Freeze account");
         System.out.println("12. Apply for a loan");
         System.out.println("13. Check remaining loan balance");
-        System.out.println("14. Exit the app");
+        System.out.println("14. Pay off a loan");
+        System.out.println("15. Exit the app");
     }
 
     public int getUserSelection(int max) {
@@ -86,6 +87,9 @@ public class MainMenu {
                 checkRemainingLoanBalance();
                 break;
             case 14:
+                performPayOffLoan();
+                break;
+            case 15:
                 break;
         }
     }
@@ -195,6 +199,16 @@ public class MainMenu {
     public void checkRemainingLoanBalance() {
         BankAccount selectedAccount = userAccount();
         System.out.println("Remaining loan balance: " + selectedAccount.getLoanBalance());
+    }
+
+    public void performPayOffLoan() {
+        BankAccount selectedAccount = userAccount();
+        double paymentAmount = -1;
+        while (paymentAmount <= 0) {
+            System.out.print("Enter payment amount: ");
+            paymentAmount = keyboardInput.nextDouble();
+        }
+        selectedAccount.payOffLoan(paymentAmount);
     }
 
     public void run() {

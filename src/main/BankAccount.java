@@ -172,6 +172,19 @@ public class BankAccount {
         transactionHistory.add(new Transaction("loan", amount));
     }
     
+    public void payOffLoan(double amount) {
+        if (closed || frozen) {
+            throw new IllegalStateException();
+        }
+        if (amount <= 0 || amount > this.loanBalance || amount > this.balance
+                || this.balance - amount < this.minimumBalance || amount > this.withdrawLimit) {
+            throw new IllegalArgumentException();
+        }
+        this.loanBalance -= amount;
+        this.balance -= amount;
+        transactionHistory.add(new Transaction("loan payment", amount));
+    }
+    
     public double getLoanBalance() {
         return this.loanBalance;
     }

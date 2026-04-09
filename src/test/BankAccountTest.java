@@ -285,4 +285,34 @@ public class BankAccountTest {
         testAccount.applyForLoan(250);
         assertEquals(250, testAccount.getLoanBalance(), 0.01);
     }
+
+    @Test
+    public void testPayOffLoan() {
+        BankAccount testAccount = new BankAccount();
+        testAccount.applyForLoan(500);
+        testAccount.payOffLoan(200);
+        assertEquals(300, testAccount.getLoanBalance(), 0.01);
+        assertEquals(300, testAccount.getBalance(), 0.01);
+    }
+
+    @Test
+    public void testOverPayLoan() {
+        BankAccount testAccount = new BankAccount();
+        testAccount.applyForLoan(300);
+        try {
+            testAccount.payOffLoan(400);
+            fail();
+        } catch (IllegalArgumentException e) {
+        }
+    }
+
+    @Test
+    public void testLoanPaymentTransactionHistory() {
+        BankAccount testAccount = new BankAccount();
+        testAccount.applyForLoan(300);
+        testAccount.payOffLoan(100);
+        assertEquals(2, testAccount.getTransactionHistory().size());
+        assertEquals("loan payment", testAccount.getTransactionHistory().get(1).getType());
+        assertEquals(100, testAccount.getTransactionHistory().get(1).getAmount(), 0.01);
+    }
 }
