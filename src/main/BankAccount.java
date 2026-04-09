@@ -10,6 +10,7 @@ public class BankAccount {
     private List<Transaction> transactionHistory;
     private double withdrawLimit;
     private String accountName;
+    private double minimumBalance;
 
     public BankAccount() {
         this.balance = 0;
@@ -17,6 +18,7 @@ public class BankAccount {
         this.transactionHistory = new ArrayList<>();
         this.withdrawLimit = Double.MAX_VALUE;
         this.accountName = "Account";
+        this.minimumBalance = 0;
     }
 
     public void deposit(double amount) {
@@ -35,12 +37,22 @@ public class BankAccount {
         if (closed) {
             throw new IllegalStateException();
         }
-        if(amount > 0 && amount <= this.balance && amount <= this.withdrawLimit){
+        if (amount > 0 && amount <= this.balance && this.balance - amount >= this.minimumBalance && amount <= this.withdrawLimit) {
             this.balance -= amount;
             transactionHistory.add(new Transaction("withdraw", amount));
         } else {
             throw new IllegalArgumentException();
         }
+    }
+    public void setMinimumBalance(double minimumBalance) {
+        if (minimumBalance < 0) {
+            throw new IllegalArgumentException();
+        }
+        this.minimumBalance = minimumBalance;
+    }
+
+    public double getMinimumBalance() {
+        return this.minimumBalance;
     }
 
     public void addInterest(double rate) {

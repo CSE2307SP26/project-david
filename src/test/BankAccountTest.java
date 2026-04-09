@@ -173,4 +173,24 @@ public class BankAccountTest {
         } catch (IllegalStateException e) {
         }
     }
+    @Test
+    public void testSetMinimumBalance() {
+        BankAccount testAccount = new BankAccount();
+        testAccount.setMinimumBalance(20);
+        assertEquals(20, testAccount.getMinimumBalance(), 0.01);
+    }
+
+    @Test
+    public void testWithdrawBelowMinimumBalance() {
+        BankAccount testAccount = new BankAccount();
+        testAccount.deposit(100);
+        testAccount.setMinimumBalance(30);
+
+        try {
+            testAccount.withdraw(80);
+            fail();
+        } catch (IllegalArgumentException e) {
+         
+        }
+}
 }
