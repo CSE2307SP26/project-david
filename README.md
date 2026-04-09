@@ -25,6 +25,8 @@
 13. A bank customer should be able to loan money from the bank. (Shiyuan)
 14. A bank customer should be able to check the account summary.(Xinyu)
 15. A bank customer should be able to have a minimum balance.(Xinyu)
+16. A bank customer should be able to check their remaining loan balance. (Nachuan)
+17. A bank customer should be able to pay off a loan. (Nachuan)
 
 ## What user stories do you intend to complete next iteration?
 
