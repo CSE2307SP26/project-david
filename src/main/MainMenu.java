@@ -5,8 +5,8 @@ import java.util.Scanner;
 
 public class MainMenu {
 
-    private static final int EXIT_SELECTION = 16;
-    private static final int MAX_SELECTION = 16;
+    private static final int EXIT_SELECTION = 17;
+    private static final int MAX_SELECTION = 17;
 
     private ArrayList<BankAccount> userAccounts;
     private Scanner keyboardInput;
@@ -36,7 +36,8 @@ public class MainMenu {
         System.out.println("13. Check remaining loan balance");
         System.out.println("14. Pay off a loan");
         System.out.println("15. Unfreeze account");
-        System.out.println("16. Exit the app");
+        System.out.println("16. Add interest to a loan");
+        System.out.println("17. Exit the app");
     }
 
     public int getUserSelection(int max) {
@@ -96,6 +97,9 @@ public class MainMenu {
                 performUnfreezeAccount();
                 break;
             case 16:
+                performAddInterestToLoan();
+                break;
+            case 17:
                 break;
         }
     }
@@ -261,6 +265,25 @@ public class MainMenu {
     public void performUnfreezeAccount(){
         BankAccount selectedAccount = userAccount();
         selectedAccount.unfreezeAccount();
+    }
+
+    public void performAddInterestToLoan() {
+        Loan selectedLoan = userLoan();
+        if (selectedLoan == null) {
+            return;
+        }
+        double interestRate = -1;
+        while (interestRate < 0) {
+            System.out.print("Enter interest rate: ");
+            interestRate = keyboardInput.nextDouble();
+        }
+        try {
+            selectedLoan.addInterest(interestRate);
+            System.out.println("Interest added successfully.");
+            System.out.println("Remaining loan balance: " + selectedLoan.getRemainingBalance());
+        } catch (Exception e) {
+            System.out.println("Failed to add interest: " + e.getMessage());
+        }
     }
 
     public void run() {

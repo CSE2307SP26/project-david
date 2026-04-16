@@ -35,6 +35,16 @@ public class Loan {
         }
     }
 
+    public void addInterest(double rate) {
+        if (closed) {
+            throw new IllegalStateException("Cannot add interest to a closed loan.");
+        }
+        if (rate < 0) {
+            throw new IllegalArgumentException("Interest rate cannot be negative.");
+        }
+        remainingBalance += remainingBalance * rate;
+    }
+
     public double getRemainingBalance() {
         return remainingBalance;
     }
