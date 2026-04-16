@@ -5,8 +5,8 @@ import java.util.Scanner;
 
 public class MainMenu {
 
-    private static final int EXIT_SELECTION = 17;
-    private static final int MAX_SELECTION = 17;
+    private static final int EXIT_SELECTION = 19;
+    private static final int MAX_SELECTION = 19;
 
     private ArrayList<BankAccount> userAccounts;
     private Scanner keyboardInput;
@@ -37,7 +37,9 @@ public class MainMenu {
         System.out.println("14. Pay off a loan");
         System.out.println("15. Unfreeze account");
         System.out.println("16. Add interest to a loan");
-        System.out.println("17. Exit the app");
+        System.out.println("17. Set deposit limit");
+        System.out.println("18. Set withdraw count limit");
+        System.out.println("19. Exit the app");
     }
 
     public int getUserSelection(int max) {
@@ -51,56 +53,25 @@ public class MainMenu {
 
     public void processInput(int selection) {
         switch (selection) {
-            case 1:
-                performDeposit();
-                break;
-            case 2:
-                checkBalance();
-                break;
-            case 3:
-                performWithDraw();
-                break;
-            case 4:
-                createAdditionalAccount();
-                break;
-            case 5:
-                viewTransactionHistory();
-                break;
-            case 6:
-                performAddInterest();
-                break;
-            case 7:
-                performCloseAccount();
-                break;
-            case 8:
-                setWithdrawLimit();
-                break;
-            case 9:
-                renameAccount();
-                break;
-            case 10:
-                viewAccountSummary();
-                break;
-            case 11:
-                performFreezeAccount();
-                break;
-            case 12:
-                performApplyLoan();
-                break;
-            case 13:
-                checkRemainingLoanBalance();
-                break;
-            case 14:
-                performPayOffLoan();
-                break;
-            case 15:
-                performUnfreezeAccount();
-                break;
-            case 16:
-                performAddInterestToLoan();
-                break;
-            case 17:
-                break;
+            case 1: performDeposit(); break;
+            case 2: checkBalance(); break;
+            case 3: performWithDraw(); break;
+            case 4: createAdditionalAccount(); break;
+            case 5: viewTransactionHistory(); break;
+            case 6: performAddInterest(); break;
+            case 7: performCloseAccount(); break;
+            case 8: setWithdrawLimit(); break;
+            case 9: renameAccount(); break;
+            case 10: viewAccountSummary(); break;
+            case 11: performFreezeAccount(); break;
+            case 12: performApplyLoan(); break;
+            case 13: checkRemainingLoanBalance(); break;
+            case 14: performPayOffLoan(); break;
+            case 15: performUnfreezeAccount(); break;
+            case 16: performAddInterestToLoan(); break;
+            case 17: setDepositLimit(); break;
+            case 18: setWithdrawCountLimit(); break;
+            case 19: break;
         }
     }
 
@@ -138,16 +109,15 @@ public class MainMenu {
         while (selection < 1 || selection > userLoans.size()) {
             System.out.println("Please select loan: ");
             for (int i = 0; i < userLoans.size(); i++) {
-                System.out.println((i + 1) + ". Loan for account: " 
+                System.out.println((i + 1) + ". Loan for account: "
                         + userLoans.get(i).getLinkedAccount().getAccountName()
-                        + " | Remaining balance: $" 
+                        + " | Remaining balance: $"
                         + userLoans.get(i).getRemainingBalance());
             }
             selection = keyboardInput.nextInt();
         }
         return userLoans.get(selection - 1);
     }
-
 
     public void performDeposit() {
         double depositAmount = -1;
@@ -242,13 +212,11 @@ public class MainMenu {
     public void performPayOffLoan() {
         Loan loan = userLoan();
         if (loan == null) return;
-
         double paymentAmount = -1;
         while (paymentAmount <= 0) {
             System.out.print("Enter payment amount: ");
             paymentAmount = keyboardInput.nextDouble();
         }
-
         try {
             loan.makePayment(paymentAmount);
             System.out.println("Payment successful.");
@@ -262,16 +230,14 @@ public class MainMenu {
         }
     }
 
-    public void performUnfreezeAccount(){
+    public void performUnfreezeAccount() {
         BankAccount selectedAccount = userAccount();
         selectedAccount.unfreezeAccount();
     }
 
     public void performAddInterestToLoan() {
         Loan selectedLoan = userLoan();
-        if (selectedLoan == null) {
-            return;
-        }
+        if (selectedLoan == null) return;
         double interestRate = -1;
         while (interestRate < 0) {
             System.out.print("Enter interest rate: ");
@@ -284,6 +250,22 @@ public class MainMenu {
         } catch (Exception e) {
             System.out.println("Failed to add interest: " + e.getMessage());
         }
+    }
+
+    public void setDepositLimit() {
+        BankAccount account = userAccount();
+        System.out.print("Enter deposit limit: ");
+        double limit = keyboardInput.nextDouble();
+        account.setDepositLimit(limit);
+        System.out.println("Deposit limit set to: " + limit);
+    }
+
+    public void setWithdrawCountLimit() {
+        BankAccount account = userAccount();
+        System.out.print("Enter max number of withdrawals allowed: ");
+        int limit = keyboardInput.nextInt();
+        account.setWithdrawCountLimit(limit);
+        System.out.println("Withdraw count limit set to: " + limit);
     }
 
     public void run() {

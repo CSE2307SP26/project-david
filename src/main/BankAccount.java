@@ -12,6 +12,9 @@ public class BankAccount {
     private String accountName;
     private double minimumBalance;
     private boolean frozen;
+    private double depositLimit;
+    private int withdrawCountLimit;
+    private int withdrawCount;
 
     public BankAccount() {
         this.balance = 0;
@@ -21,13 +24,16 @@ public class BankAccount {
         this.accountName = "Account";
         this.minimumBalance = 0;
         this.frozen = false;
+        this.depositLimit = Double.MAX_VALUE;
+        this.withdrawCountLimit = Integer.MAX_VALUE;
+        this.withdrawCount = 0;
     }
 
     public void deposit(double amount) {
         if (closed || frozen) {
             throw new IllegalStateException();
         }
-        if(amount > 0) {
+        if(amount > 0 && this.balance + amount <= this.depositLimit) {
             this.balance += amount;
             transactionHistory.add(new Transaction("deposit", amount));
         } else {
@@ -35,17 +41,48 @@ public class BankAccount {
         }
     }
 
+    public void setDepositLimit(double limit) {
+        if(limit > 0) {
+            this.depositLimit = limit;
+        } else {
+            throw new IllegalArgumentException();
+        }
+    }
+
+    public double getDepositLimit() {
+        return this.depositLimit;
+    }
+
     public void withdraw(double amount){
         if (closed || frozen) {
             throw new IllegalStateException();
         }
-        if (amount > 0 && amount <= this.balance && this.balance - amount >= this.minimumBalance && amount <= this.withdrawLimit) {
+        if (amount > 0 && amount <= this.balance && this.balance - amount >= this.minimumBalance 
+                && amount <= this.withdrawLimit && this.withdrawCount < this.withdrawCountLimit) {
             this.balance -= amount;
+            this.withdrawCount++;
             transactionHistory.add(new Transaction("withdraw", amount));
         } else {
             throw new IllegalArgumentException();
         }
     }
+
+    public void setWithdrawCountLimit(int limit) {
+        if(limit > 0) {
+            this.withdrawCountLimit = limit;
+        } else {
+            throw new IllegalArgumentException();
+        }
+    }
+
+    public int getWithdrawCountLimit() {
+        return this.withdrawCountLimit;
+    }
+
+    public int getWithdrawCount() {
+        return this.withdrawCount;
+    }
+
     public void setMinimumBalance(double minimumBalance) {
         if (minimumBalance < 0) {
             throw new IllegalArgumentException();
@@ -123,21 +160,19 @@ public class BankAccount {
     }
 
     public String getAccountSummary() {
-    double totalDeposits = 0;
-    double totalWithdrawals = 0;
-
-    for (Transaction transaction : transactionHistory) {
-        if (transaction.getType().equals("deposit")) {
-            totalDeposits += transaction.getAmount();
-        } else if (transaction.getType().equals("withdraw")) {
-            totalWithdrawals += transaction.getAmount();
+        double totalDeposits = 0;
+        double totalWithdrawals = 0;
+        for (Transaction transaction : transactionHistory) {
+            if (transaction.getType().equals("deposit")) {
+                totalDeposits += transaction.getAmount();
+            } else if (transaction.getType().equals("withdraw")) {
+                totalWithdrawals += transaction.getAmount();
+            }
         }
-    }
-
-    return "Current balance: $" + this.balance
-            + "\nTotal deposits: $" + totalDeposits
-            + "\nTotal withdrawals: $" + totalWithdrawals
-            + "\nMinimum balance: $" + this.minimumBalance;
+        return "Current balance: $" + this.balance
+                + "\nTotal deposits: $" + totalDeposits
+                + "\nTotal withdrawals: $" + totalWithdrawals
+                + "\nMinimum balance: $" + this.minimumBalance;
     }
 
     public void freezeAccount() {
