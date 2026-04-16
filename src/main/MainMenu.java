@@ -5,8 +5,8 @@ import java.util.Scanner;
 
 public class MainMenu {
 
-    private static final int EXIT_SELECTION = 16;
-    private static final int MAX_SELECTION = 16;
+    private static final int EXIT_SELECTION = 18;
+    private static final int MAX_SELECTION = 18;
 
     private ArrayList<BankAccount> userAccounts;
     private Scanner keyboardInput;
@@ -36,7 +36,9 @@ public class MainMenu {
         System.out.println("13. Check remaining loan balance");
         System.out.println("14. Pay off a loan");
         System.out.println("15. Unfreeze account");
-        System.out.println("16. Exit the app");
+        System.out.println("16. Set deposit limit");
+        System.out.println("17. Set withdraw count limit");
+        System.out.println("18. Exit the app");
     }
 
     public int getUserSelection(int max) {
@@ -95,7 +97,14 @@ public class MainMenu {
             case 15:
                 performUnfreezeAccount();
                 break;
+
             case 16:
+                setDepositLimit();
+                break;
+            case 17:
+                setWithdrawCountLimit();
+                break;
+            case 18:
                 break;
         }
     }
@@ -262,6 +271,30 @@ public class MainMenu {
         BankAccount selectedAccount = userAccount();
         selectedAccount.unfreezeAccount();
     }
+
+
+
+    public void setDepositLimit() {
+        BankAccount account = userAccount();
+        System.out.print("Enter deposit limit: ");
+        double limit = keyboardInput.nextDouble();
+        account.setDepositLimit(limit);
+        System.out.println("Deposit limit set to: " + limit);
+    }
+
+    public void setWithdrawCountLimit() {
+        BankAccount account = userAccount();
+        System.out.print("Enter max number of withdrawals allowed: ");
+        int limit = keyboardInput.nextInt();
+        account.setWithdrawCountLimit(limit);
+        System.out.println("Withdraw count limit set to: " + limit);
+    }
+
+
+
+
+
+
 
     public void run() {
         int selection = -1;

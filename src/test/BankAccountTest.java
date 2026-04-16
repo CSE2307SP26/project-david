@@ -339,4 +339,53 @@ public class BankAccountTest {
         assertEquals(100, account.getBalance(), 0.001);
     }
 
+
+    @Test
+    public void testSetDepositLimit() {
+        BankAccount testAccount = new BankAccount();
+        testAccount.setDepositLimit(100);
+        try {
+            testAccount.deposit(150);
+            fail();
+        } catch (IllegalArgumentException e) {
+        }
+    }
+
+    @Test
+    public void testDepositWithinLimit() {
+        BankAccount testAccount = new BankAccount();
+        testAccount.setDepositLimit(100);
+        testAccount.deposit(50);
+        assertEquals(50, testAccount.getBalance(), 0.01);
+    }
+
+    @Test
+    public void testSetWithdrawCountLimit() {
+        BankAccount testAccount = new BankAccount();
+        testAccount.deposit(100);
+        testAccount.setWithdrawCountLimit(1);
+        testAccount.withdraw(10);
+        try {
+            testAccount.withdraw(10);
+            fail();
+        } catch (IllegalArgumentException e) {
+        }
+    }
+
+
+    @Test
+    public void testWithdrawWithinCountLimit() {
+        BankAccount testAccount = new BankAccount();
+        testAccount.deposit(100);
+        testAccount.setWithdrawCountLimit(2);
+        testAccount.withdraw(10);
+        testAccount.withdraw(10);
+        assertEquals(80, testAccount.getBalance(), 0.01);
+    }
+
+
+
+
+
+
 }
