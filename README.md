@@ -27,6 +27,7 @@
 15. A bank customer should be able to have a minimum balance.(Xinyu)
 16. A bank customer should be able to check their remaining loan balance. (Nachuan)
 17. A bank customer should be able to pay off a loan. (Nachuan)
+18. A bank administrator should be able to unfreeze an account. (Shiyuan)
 
 ## What user stories do you intend to complete next iteration?
 

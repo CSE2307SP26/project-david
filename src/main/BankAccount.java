@@ -12,7 +12,6 @@ public class BankAccount {
     private String accountName;
     private double minimumBalance;
     private boolean frozen;
-    private double loanBalance;
 
     public BankAccount() {
         this.balance = 0;
@@ -22,7 +21,6 @@ public class BankAccount {
         this.accountName = "Account";
         this.minimumBalance = 0;
         this.frozen = false;
-        this.loanBalance = 0;
     }
 
     public void deposit(double amount) {
@@ -159,34 +157,4 @@ public class BankAccount {
     public boolean isFrozen() {
         return this.frozen;
     }
-
-    public void applyForLoan(double amount) {
-        if (closed || frozen) {
-            throw new IllegalStateException();
-        }
-        if (amount <= 0) {
-            throw new IllegalArgumentException();
-        }
-        this.loanBalance += amount;
-        this.balance += amount;
-        transactionHistory.add(new Transaction("loan", amount));
-    }
-    
-    public void payOffLoan(double amount) {
-        if (closed || frozen) {
-            throw new IllegalStateException();
-        }
-        if (amount <= 0 || amount > this.loanBalance || amount > this.balance
-                || this.balance - amount < this.minimumBalance || amount > this.withdrawLimit) {
-            throw new IllegalArgumentException();
-        }
-        this.loanBalance -= amount;
-        this.balance -= amount;
-        transactionHistory.add(new Transaction("loan payment", amount));
-    }
-    
-    public double getLoanBalance() {
-        return this.loanBalance;
-    }
-    
 }

@@ -5,16 +5,18 @@ import java.util.Scanner;
 
 public class MainMenu {
 
-    private static final int EXIT_SELECTION = 15;
-    private static final int MAX_SELECTION = 15;
+    private static final int EXIT_SELECTION = 16;
+    private static final int MAX_SELECTION = 16;
 
     private ArrayList<BankAccount> userAccounts;
     private Scanner keyboardInput;
+    private ArrayList<Loan> userLoans;
 
     public MainMenu() {
         this.userAccounts = new ArrayList<>();
         this.userAccounts.add(new BankAccount());
         this.keyboardInput = new Scanner(System.in);
+        this.userLoans = new ArrayList<>();
     }
 
     public void displayOptions() {
@@ -123,6 +125,26 @@ public class MainMenu {
         return userAccounts.get(selection - 1);
     }
 
+    public Loan userLoan() {
+        if (userLoans.isEmpty()) {
+            System.out.println("No loans available.");
+            return null;
+        }
+        int selection = -1;
+        while (selection < 1 || selection > userLoans.size()) {
+            System.out.println("Please select loan: ");
+            for (int i = 0; i < userLoans.size(); i++) {
+                System.out.println((i + 1) + ". Loan for account: " 
+                        + userLoans.get(i).getLinkedAccount().getAccountName()
+                        + " | Remaining balance: $" 
+                        + userLoans.get(i).getRemainingBalance());
+            }
+            selection = keyboardInput.nextInt();
+        }
+        return userLoans.get(selection - 1);
+    }
+
+
     public void performDeposit() {
         double depositAmount = -1;
         while (depositAmount < 0) {
@@ -133,12 +155,13 @@ public class MainMenu {
     }
 
     public void performWithDraw() {
+        BankAccount account = userAccount();
         double withDrawAmount = -1;
-        while (withDrawAmount < 0 || withDrawAmount > userAccount().getBalance()) {
+        while (withDrawAmount < 0 || withDrawAmount > account.getBalance()) {
             System.out.print("How much would you like to withdraw: ");
-            withDrawAmount = keyboardInput.nextInt();
+            withDrawAmount = keyboardInput.nextDouble();
         }
-        userAccount().withdraw(withDrawAmount);
+        account.withdraw(withDrawAmount);
     }
 
     public void setWithdrawLimit() {
@@ -191,28 +214,48 @@ public class MainMenu {
     }
 
     public void performApplyLoan() {
-        BankAccount selectedAccount = userAccount();
+        BankAccount account = userAccount();
+        if (account.isClosed() || account.isFrozen()) {
+            System.out.println("This account cannot be used for a loan.");
+            return;
+        }
         double loanAmount = -1;
         while (loanAmount <= 0) {
             System.out.print("Enter loan amount: ");
             loanAmount = keyboardInput.nextDouble();
         }
-        selectedAccount.applyForLoan(loanAmount);
+        userLoans.add(new Loan(loanAmount, account));
+        System.out.println("Loan created and deposited into account.");
     }
 
     public void checkRemainingLoanBalance() {
-        BankAccount selectedAccount = userAccount();
-        System.out.println("Remaining loan balance: " + selectedAccount.getLoanBalance());
+        Loan selectedLoan = userLoan();
+        if (selectedLoan != null) {
+            System.out.println("Remaining loan balance: " + selectedLoan.getRemainingBalance());
+        }
     }
 
     public void performPayOffLoan() {
-        BankAccount selectedAccount = userAccount();
+        Loan loan = userLoan();
+        if (loan == null) return;
+
         double paymentAmount = -1;
         while (paymentAmount <= 0) {
             System.out.print("Enter payment amount: ");
             paymentAmount = keyboardInput.nextDouble();
         }
-        selectedAccount.payOffLoan(paymentAmount);
+
+        try {
+            loan.makePayment(paymentAmount);
+            System.out.println("Payment successful.");
+            System.out.println("Remaining loan balance: " + loan.getRemainingBalance());
+            if (loan.isClosed()) {
+                userLoans.remove(loan);
+                System.out.println("Loan has been fully paid off and closed.");
+            }
+        } catch (Exception e) {
+            System.out.println("Payment failed: " + e.getMessage());
+        }
     }
 
     public void performUnfreezeAccount(){

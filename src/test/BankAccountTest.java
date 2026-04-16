@@ -1,6 +1,7 @@
 package test;
 import main.Transaction;
 import main.BankAccount;
+import main.Loan;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -245,8 +246,10 @@ public class BankAccountTest {
     @Test
     public void testApplyForLoan() {
         BankAccount testAccount = new BankAccount();
-        testAccount.applyForLoan(500);
-        assertEquals(500, testAccount.getLoanBalance(), 0.01);
+        Loan testLoan = new Loan(500, testAccount);
+        assertEquals(500, testLoan.getRemainingBalance(), 0.01);
+        assertFalse(testLoan.isClosed());
+        assertEquals(testAccount, testLoan.getLinkedAccount());
         assertEquals(500, testAccount.getBalance(), 0.01);
     }
 
@@ -254,19 +257,10 @@ public class BankAccountTest {
     public void testInvalidLoanAmount() {
         BankAccount testAccount = new BankAccount();
         try {
-            testAccount.applyForLoan(-100);
+            Loan testLoan = new Loan(-100, testAccount);
             fail();
         } catch (IllegalArgumentException e) {
         }
-    }
-
-    @Test
-    public void testLoanTransactionHistory() {
-        BankAccount testAccount = new BankAccount();
-        testAccount.applyForLoan(300);
-        assertEquals(1, testAccount.getTransactionHistory().size());
-        assertEquals("loan", testAccount.getTransactionHistory().get(0).getType());
-        assertEquals(300, testAccount.getTransactionHistory().get(0).getAmount(), 0.01);
     }
 
     @Test
@@ -274,7 +268,18 @@ public class BankAccountTest {
         BankAccount testAccount = new BankAccount();
         testAccount.closeAccount();
         try {
-            testAccount.applyForLoan(200);
+            Loan testLoan = new Loan(200, testAccount);
+            fail();
+        } catch (IllegalStateException e) {
+        }
+    }
+
+    @Test
+    public void testApplyForLoanToFrozenAccount() {
+        BankAccount testAccount = new BankAccount();
+        testAccount.freezeAccount();
+        try {
+            Loan testLoan = new Loan(200, testAccount);
             fail();
         } catch (IllegalStateException e) {
         }
@@ -283,25 +288,25 @@ public class BankAccountTest {
     @Test
     public void testCheckRemainingLoanBalance() {
         BankAccount testAccount = new BankAccount();
-        testAccount.applyForLoan(250);
-        assertEquals(250, testAccount.getLoanBalance(), 0.01);
+        Loan testLoan = new Loan(250, testAccount);
+        assertEquals(250, testLoan.getRemainingBalance(), 0.01);
     }
 
     @Test
     public void testPayOffLoan() {
         BankAccount testAccount = new BankAccount();
-        testAccount.applyForLoan(500);
-        testAccount.payOffLoan(200);
-        assertEquals(300, testAccount.getLoanBalance(), 0.01);
+        Loan testLoan = new Loan(500, testAccount);
+        testLoan.makePayment(200);
+        assertEquals(300, testLoan.getRemainingBalance(), 0.01);
         assertEquals(300, testAccount.getBalance(), 0.01);
     }
 
     @Test
     public void testOverPayLoan() {
-        BankAccount testAccount = new BankAccount();
-        testAccount.applyForLoan(300);
+       BankAccount testAccount = new BankAccount();
+        Loan testLoan = new Loan(300, testAccount);
         try {
-            testAccount.payOffLoan(400);
+            testLoan.makePayment(400);
             fail();
         } catch (IllegalArgumentException e) {
         }
@@ -310,10 +315,10 @@ public class BankAccountTest {
     @Test
     public void testLoanPaymentTransactionHistory() {
         BankAccount testAccount = new BankAccount();
-        testAccount.applyForLoan(300);
-        testAccount.payOffLoan(100);
+        Loan testLoan = new Loan(300, testAccount);
+        testLoan.makePayment(100);
         assertEquals(2, testAccount.getTransactionHistory().size());
-        assertEquals("loan payment", testAccount.getTransactionHistory().get(1).getType());
+        assertEquals("withdraw", testAccount.getTransactionHistory().get(1).getType());
         assertEquals(100, testAccount.getTransactionHistory().get(1).getAmount(), 0.01);
     }
 
