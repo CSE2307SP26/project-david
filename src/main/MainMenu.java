@@ -33,7 +33,8 @@ public class MainMenu {
         System.out.println("12. Apply for a loan");
         System.out.println("13. Check remaining loan balance");
         System.out.println("14. Pay off a loan");
-        System.out.println("15. Exit the app");
+        System.out.println("15. Unfreeze account");
+        System.out.println("16. Exit the app");
     }
 
     public int getUserSelection(int max) {
@@ -90,6 +91,9 @@ public class MainMenu {
                 performPayOffLoan();
                 break;
             case 15:
+                performUnfreezeAccount();
+                break;
+            case 16:
                 break;
         }
     }
@@ -209,6 +213,11 @@ public class MainMenu {
             paymentAmount = keyboardInput.nextDouble();
         }
         selectedAccount.payOffLoan(paymentAmount);
+    }
+
+    public void performUnfreezeAccount(){
+        BankAccount selectedAccount = userAccount();
+        selectedAccount.unfreezeAccount();
     }
 
     public void run() {

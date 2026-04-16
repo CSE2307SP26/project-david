@@ -5,6 +5,7 @@ import main.BankAccount;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import org.junit.jupiter.api.Test;
 
@@ -315,4 +316,22 @@ public class BankAccountTest {
         assertEquals("loan payment", testAccount.getTransactionHistory().get(1).getType());
         assertEquals(100, testAccount.getTransactionHistory().get(1).getAmount(), 0.01);
     }
+
+    @Test
+    public void testUnfreezeAccount() {
+        BankAccount account = new BankAccount();
+        account.freezeAccount();
+        account.unfreezeAccount();
+        assertFalse(account.isFrozen());
+    }
+
+    @Test
+    public void testCanDepositAfterUnfreeze() {
+        BankAccount account = new BankAccount();
+        account.freezeAccount();
+        account.unfreezeAccount();
+        account.deposit(100);
+        assertEquals(100, account.getBalance(), 0.001);
+    }
+
 }
