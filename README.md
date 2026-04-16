@@ -29,7 +29,8 @@
 17. A bank customer should be able to pay off a loan. (Nachuan)
 18. A bank administrator should be able to unfreeze an account. (Shiyuan)
 19. A bank administrator should be able to add interest to an existing loan. (Shiyuan)
-
+20. A bank customer should be able to set a deposit limit for an account. (Haoxuan)
+21. A bank customer should be able to set a withdraw count limit for an account. (Haoxuan)
 ## What user stories do you intend to complete next iteration?
 
 In the upcoming iteration, We plan to further optimize the account management system. Specifically, We will expand the verification scope to prevent users from being restricted. Additionally, We will also consider improving the user interaction of the menu system, such as providing clearer prompts.
