@@ -5,8 +5,8 @@ import java.util.Scanner;
 
 public class MainMenu {
 
-    private static final int EXIT_SELECTION = 21;
-    private static final int MAX_SELECTION = 21;
+    private static final int EXIT_SELECTION = 22;
+    private static final int MAX_SELECTION = 22;
 
     private ArrayList<BankAccount> userAccounts;
     private Scanner keyboardInput;
@@ -41,7 +41,8 @@ public class MainMenu {
         System.out.println("18. Set withdraw count limit");
         System.out.println("19. Set savings goal");
         System.out.println("20. View savings goal progress");
-        System.out.println("21. Exit the app");
+        System.out.println("21. View loan payment history");
+        System.out.println("22. Exit the app");
     }
 
     public int getUserSelection(int max) {
@@ -75,7 +76,8 @@ public class MainMenu {
             case 18: setWithdrawCountLimit(); break;
             case 19: setSavingsGoal(); break;
             case 20: viewSavingsGoalProgress(); break;
-            case 21: System.out.println("Thank you for using the 237 Bank App!"); break;
+            case 21: viewLoanPaymentHistory(); break;
+            case 22: System.out.println("Thank you for using the 237 Bank App!"); break;
         }
     }
 
@@ -288,6 +290,21 @@ public class MainMenu {
         System.out.println("Savings goal: " + account.getSavingsGoal());
         System.out.println("Remaining to goal: " + account.getRemainingToGoal());
         System.out.println("Savings progress: " + account.getSavingsProgress() + "%");
+    }
+
+    public void viewLoanPaymentHistory() {
+        Loan loan = userLoan();
+        if (loan == null) return;
+
+        System.out.println("Loan payment history:");
+        if (loan.getPaymentHistory().isEmpty()) {
+            System.out.println("No payments have been made yet.");
+        } else {
+            for (double payment : loan.getPaymentHistory()) {
+                System.out.println(payment);
+            }
+        }
+        System.out.println("Total paid: " + loan.getTotalPaid());
     }
 
     public void run() {
