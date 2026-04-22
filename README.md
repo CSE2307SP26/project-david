@@ -31,14 +31,11 @@
 19. A bank administrator should be able to add interest to an existing loan. (Shiyuan)
 20. A bank customer should be able to set a deposit limit for an account. (Haoxuan)
 21. A bank customer should be able to set a withdraw count limit for an account. (Haoxuan)
+22. A bank customer should be able to set a savings goal for an account. (Nachuan)
+23. A bank customer should be able to view loan payment history for an existing loan. (Nachuan)
 ## What user stories do you intend to complete next iteration?
 
-In the upcoming iteration, We plan to further optimize the account management system. Specifically, We will expand the verification scope to prevent users from being restricted. Additionally, We will also consider improving the user interaction of the menu system, such as providing clearer prompts.
-
-In the next iteration, we will implement the following user stories:
-- A bank administrator should be able to unfreeze an account.
-- A bank customer should be able to pay off a loan.
-Also, we might take the administrator permissions into new java classes to make the code more modular and easier to maintain.
+At this point, the core user stories planned for this project have been completed. In the final stage, we mainly focused on polishing the existing features, improving code organization, and making sure the program runs correctly with passing unit tests.
 
 ## Is there anything that you implemented but doesn't currently work?
 
