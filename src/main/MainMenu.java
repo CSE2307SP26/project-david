@@ -5,8 +5,8 @@ import java.util.Scanner;
 
 public class MainMenu {
 
-    private static final int EXIT_SELECTION = 19;
-    private static final int MAX_SELECTION = 19;
+    private static final int EXIT_SELECTION = 21;
+    private static final int MAX_SELECTION = 21;
 
     private ArrayList<BankAccount> userAccounts;
     private Scanner keyboardInput;
@@ -39,7 +39,9 @@ public class MainMenu {
         System.out.println("16. Add interest to a loan");
         System.out.println("17. Set deposit limit");
         System.out.println("18. Set withdraw count limit");
-        System.out.println("19. Exit the app");
+        System.out.println("19. Set savings goal");
+        System.out.println("20. View savings goal progress");
+        System.out.println("21. Exit the app");
     }
 
     public int getUserSelection(int max) {
@@ -71,7 +73,9 @@ public class MainMenu {
             case 16: performAddInterestToLoan(); break;
             case 17: setDepositLimit(); break;
             case 18: setWithdrawCountLimit(); break;
-            case 19: break;
+            case 19: setSavingsGoal(); break;
+            case 20: viewSavingsGoalProgress(); break;
+            case 21: System.out.println("Thank you for using the 237 Bank App!"); break;
         }
     }
 
@@ -266,6 +270,24 @@ public class MainMenu {
         int limit = keyboardInput.nextInt();
         account.setWithdrawCountLimit(limit);
         System.out.println("Withdraw count limit set to: " + limit);
+    }
+
+    public void setSavingsGoal() {
+        BankAccount account = userAccount();
+        double goal = -1;
+        while (goal <= 0) {
+            System.out.print("Enter savings goal: ");
+            goal = keyboardInput.nextDouble();
+        }
+        account.setSavingsGoal(goal);
+        System.out.println("Savings goal set to: " + goal);
+    }
+
+    public void viewSavingsGoalProgress() {
+        BankAccount account = userAccount();
+        System.out.println("Savings goal: " + account.getSavingsGoal());
+        System.out.println("Remaining to goal: " + account.getRemainingToGoal());
+        System.out.println("Savings progress: " + account.getSavingsProgress() + "%");
     }
 
     public void run() {
