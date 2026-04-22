@@ -1,9 +1,9 @@
 package test;
+
 import main.BankAccount;
 import main.Loan;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
@@ -70,7 +70,7 @@ public class LoanTest {
 
     @Test
     public void testOverPayLoan() {
-       BankAccount testAccount = new BankAccount();
+        BankAccount testAccount = new BankAccount();
         Loan testLoan = new Loan(300, testAccount);
         try {
             testLoan.makePayment(400);
@@ -118,5 +118,40 @@ public class LoanTest {
             fail();
         } catch (IllegalStateException e) {
         }
+    }
+
+    @Test
+    public void testLoanPaymentHistoryAfterOnePayment() {
+        BankAccount testAccount = new BankAccount();
+        Loan testLoan = new Loan(500, testAccount);
+        testAccount.deposit(200);
+        testLoan.makePayment(100);
+
+        assertEquals(1, testLoan.getPaymentHistory().size());
+        assertEquals(100, testLoan.getPaymentHistory().get(0), 0.001);
+    }
+
+    @Test
+    public void testLoanPaymentHistoryAfterMultiplePayments() {
+        BankAccount testAccount = new BankAccount();
+        Loan testLoan = new Loan(500, testAccount);
+        testAccount.deposit(300);
+        testLoan.makePayment(100);
+        testLoan.makePayment(150);
+
+        assertEquals(2, testLoan.getPaymentHistory().size());
+        assertEquals(100, testLoan.getPaymentHistory().get(0), 0.001);
+        assertEquals(150, testLoan.getPaymentHistory().get(1), 0.001);
+    }
+
+    @Test
+    public void testTotalPaidOnLoan() {
+        BankAccount testAccount = new BankAccount();
+        Loan testLoan = new Loan(500, testAccount);
+        testAccount.deposit(300);
+        testLoan.makePayment(100);
+        testLoan.makePayment(150);
+
+        assertEquals(250, testLoan.getTotalPaid(), 0.001);
     }
 }
