@@ -15,6 +15,7 @@ public class BankAccount {
     private double depositLimit;
     private int withdrawCountLimit;
     private int withdrawCount;
+    private double savingsGoal;
 
     public BankAccount() {
         this.balance = 0;
@@ -27,6 +28,7 @@ public class BankAccount {
         this.depositLimit = Double.MAX_VALUE;
         this.withdrawCountLimit = Integer.MAX_VALUE;
         this.withdrawCount = 0;
+        this.savingsGoal = 0;
     }
 
     public void deposit(double amount) {
@@ -153,6 +155,39 @@ public class BankAccount {
 
     public double getBalance() {
         return this.balance;
+    }
+
+    public void setSavingsGoal(double goal) {
+        if (goal <= 0) {
+            throw new IllegalArgumentException();
+        }
+        this.savingsGoal = goal;
+    }
+
+    public double getSavingsGoal() {
+        return this.savingsGoal;
+    }
+
+    public double getRemainingToGoal() {
+        if (this.savingsGoal <= 0) {
+            return 0;
+        }
+        double remaining = this.savingsGoal - this.balance;
+        if (remaining < 0) {
+            return 0;
+        }
+        return remaining;
+    }
+
+    public double getSavingsProgress() {
+        if (this.savingsGoal <= 0) {
+            return 0;
+        }
+        double progress = (this.balance / this.savingsGoal) * 100;
+        if (progress > 100) {
+            return 100;
+        }
+        return progress;
     }
 
     public List<Transaction> getTransactionHistory() {

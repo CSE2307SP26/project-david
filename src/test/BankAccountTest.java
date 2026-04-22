@@ -7,6 +7,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
@@ -293,7 +294,6 @@ public class BankAccountTest {
         }
     }
 
-
     @Test
     public void testWithdrawWithinCountLimit() {
         BankAccount testAccount = new BankAccount();
@@ -304,7 +304,34 @@ public class BankAccountTest {
         assertEquals(80, testAccount.getBalance(), 0.01);
     }
 
+   @Test
+    public void testSetSavingsGoal() {
+        BankAccount testAccount = new BankAccount();
+        testAccount.setSavingsGoal(500);
+        assertEquals(500, testAccount.getSavingsGoal(), 0.001);
+    }
 
+    @Test
+    public void testInvalidSavingsGoal() {
+        BankAccount testAccount = new BankAccount();
+        assertThrows(IllegalArgumentException.class, () -> testAccount.setSavingsGoal(0));
+    }
+
+    @Test
+    public void testRemainingToGoal() {
+        BankAccount testAccount = new BankAccount();
+        testAccount.deposit(200);
+        testAccount.setSavingsGoal(500);
+        assertEquals(300, testAccount.getRemainingToGoal(), 0.001);
+    }
+
+    @Test
+    public void testSavingsProgress() {
+        BankAccount testAccount = new BankAccount();
+        testAccount.deposit(200);
+        testAccount.setSavingsGoal(500);
+        assertEquals(40, testAccount.getSavingsProgress(), 0.001);
+    }
 
 
 
