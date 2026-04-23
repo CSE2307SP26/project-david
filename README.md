@@ -33,6 +33,8 @@
 21. A bank customer should be able to set a withdraw count limit for an account. (Haoxuan)
 22. A bank customer should be able to set a savings goal for an account. (Nachuan)
 23. A bank customer should be able to view loan payment history for an existing loan. (Nachuan)
+24. A bank customer should be able to view the most recent transaction for an account. (Xinyu)
+25. A bank customer should be able to view the total number of transactions associated with an account. (Xinyu)
 ## What user stories do you intend to complete next iteration?
 
 At this point, the core user stories planned for this project have been completed. In the final stage, we mainly focused on polishing the existing features, improving code organization, and making sure the program runs correctly with passing unit tests.
