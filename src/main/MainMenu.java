@@ -5,8 +5,8 @@ import java.util.Scanner;
 
 public class MainMenu {
 
-    private static final int EXIT_SELECTION = 22;
-    private static final int MAX_SELECTION = 22;
+    private static final int EXIT_SELECTION = 23;
+    private static final int MAX_SELECTION = 23;
 
     private ArrayList<BankAccount> userAccounts;
     private Scanner keyboardInput;
@@ -42,7 +42,8 @@ public class MainMenu {
         System.out.println("19. Set savings goal");
         System.out.println("20. View savings goal progress");
         System.out.println("21. View loan payment history");
-        System.out.println("22. Exit the app");
+        System.out.println("22. View most recent transaction");
+        System.out.println("23. Exit the app");
     }
 
     public int getUserSelection(int max) {
@@ -77,7 +78,8 @@ public class MainMenu {
             case 19: setSavingsGoal(); break;
             case 20: viewSavingsGoalProgress(); break;
             case 21: viewLoanPaymentHistory(); break;
-            case 22: System.out.println("Thank you for using the 237 Bank App!"); break;
+            case 22: viewMostRecentTransaction(); break;
+            case 23: System.out.println("Thank you for using the 237 Bank App!"); break;
         }
     }
 
@@ -319,5 +321,15 @@ public class MainMenu {
     public static void main(String[] args) {
         MainMenu bankApp = new MainMenu();
         bankApp.run();
+    }
+    public void viewMostRecentTransaction() {
+        BankAccount account = userAccount();
+        Transaction transaction = account.getMostRecentTransaction();
+
+        if (transaction == null) {
+            System.out.println("No transactions found.");
+        } else {
+            System.out.println("Most recent transaction: " + transaction);
+        }
     }
 }

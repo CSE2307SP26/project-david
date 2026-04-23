@@ -227,4 +227,10 @@ public class BankAccount {
     public boolean isFrozen() {
         return this.frozen;
     }
+    public Transaction getMostRecentTransaction() {
+        if (transactionHistory.isEmpty()) {
+            return null;
+        }
+        return transactionHistory.get(transactionHistory.size() - 1);
+    }
 }
