@@ -346,6 +346,14 @@ public class BankAccountTest {
         assertEquals("withdraw", t.getType());
         assertEquals(20, t.getAmount(), 0.01);
     }
+    @Test
+    public void testTransactionCount() {
+        BankAccount account = new BankAccount();
+        account.deposit(100);
+        account.withdraw(20);
+
+        assertEquals(2, account.getTransactionCount());
+    }
 
 
 
