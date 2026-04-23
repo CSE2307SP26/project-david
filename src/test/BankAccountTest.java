@@ -1,15 +1,15 @@
 package test;
+
 import main.Transaction;
 import main.BankAccount;
 import main.Loan;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.fail;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 public class BankAccountTest {
 
@@ -314,7 +314,11 @@ public class BankAccountTest {
     @Test
     public void testInvalidSavingsGoal() {
         BankAccount testAccount = new BankAccount();
-        assertThrows(IllegalArgumentException.class, () -> testAccount.setSavingsGoal(0));
+        try {
+        testAccount.setSavingsGoal(0);
+        fail();
+    } catch (IllegalArgumentException e) {
+    }
     }
 
     @Test
@@ -331,6 +335,16 @@ public class BankAccountTest {
         testAccount.deposit(200);
         testAccount.setSavingsGoal(500);
         assertEquals(40, testAccount.getSavingsProgress(), 0.001);
+    }
+    @Test
+    public void testMostRecentTransaction() {
+        BankAccount account = new BankAccount();
+        account.deposit(100);
+        account.withdraw(20);
+
+        Transaction t = account.getMostRecentTransaction();
+        assertEquals("withdraw", t.getType());
+        assertEquals(20, t.getAmount(), 0.01);
     }
 
 
