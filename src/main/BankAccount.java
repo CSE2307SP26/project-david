@@ -233,4 +233,7 @@ public class BankAccount {
         }
         return transactionHistory.get(transactionHistory.size() - 1);
     }
+    public int getTransactionCount() {
+        return transactionHistory.size();
+    }
 }
